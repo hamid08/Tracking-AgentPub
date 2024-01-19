@@ -9,12 +9,12 @@ var token = process.env.Token;
 const socket = io(process.env.TrackingHandlerAddress, {
     auth: { token },
     query: { 'customerId': process.env.CustomerId },
-    serveClient: false,
+    serveClient: true,
     pingInterval: 60000,
     pingTimeout: 60000000,
     reconnection: true,
-    reconnectionDelay: 500,
-    reconnectionAttempts: 10,
+    reconnectionDelay: 100,
+    reconnectionAttempts: 1000,
     cors: {
         origin: "http://12.0.0.3:8485",
         methods: ["GET", "POST"],

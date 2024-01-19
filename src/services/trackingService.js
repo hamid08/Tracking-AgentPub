@@ -18,35 +18,35 @@ async function TransportTrackingDataToRabbitMQ(locations) {
   var trackingRequestData = [];
 
   locations.forEach((element) => {
-    customerTerminalNo = element.CustomerTerminalNo;
+    customerTerminalNo = element.customerTerminalNo;
 
     trackingRequestData.push({
       Id: _generator.generateObjectId(),
-      IMEI: element.IMEI,
-      TerminalNo: element.DeviceTerminalNo,
-      IdentifyNo: element.DeviceIdentity,
+      IMEI: element.imei,
+      TerminalNo: element.deviceTerminalNo,
+      IdentifyNo: element.deviceIdentity,
       TrakingData: [
         {
-          IMEI: element.IMEI,
-          Time: element.TrafficDate,
+          IMEI: element.imei,
+          Time: element.trafficDate,
           Milliseconds: null,
-          Latitude: element.Latitude,
-          Longitude: element.Longitude,
-          Altitude: element.Altitude,
-          Speed: element.Speed,
-          Angle: element.Angle,
-          SatelliteCount: element.SatelliteCount,
+          Latitude: element.latitude,
+          Longitude: element.longitude,
+          Altitude: element.altitude,
+          Speed: element.speed,
+          Angle: element.angle,
+          SatelliteCount: element.satelliteCount,
           Priority: 0,
-          TerminalNo: element.DeviceTerminalNo,
-          IdentifyNo: element.DeviceIdentity,
-          Metadata: element.MetaData
+          TerminalNo: element.deviceTerminalNo,
+          IdentifyNo: element.deviceIdentity,
+          Metadata: element.metaData
         }
 
       ]
     });
 
 
-    acceptList.push(element.Code);
+    acceptList.push(element.code);
   });
 
   var webAPI_Tracking_Request = {
@@ -156,8 +156,8 @@ async function GetValidLocationsByTrafficDate(locations) {
 
   //Check In Memory
   locations.forEach(item => {
-    if (!uniqueTrafficDate.includes(item.TrafficDate)) {
-      uniqueTrafficDate.push(item.TrafficDate);
+    if (!uniqueTrafficDate.includes(item.trafficDate)) {
+      uniqueTrafficDate.push(item.trafficDate);
       uniqueLocations.push(item);
     }
   });
@@ -166,7 +166,7 @@ async function GetValidLocationsByTrafficDate(locations) {
 
   //Check In MongoDb
   uniqueLocations.forEach(async item => {
-    var trackingInDb = await GetTrackingByTrafficDate(item.TrafficDate);
+    var trackingInDb = await GetTrackingByTrafficDate(item.trafficDate);
     if (trackingInDb != null || trackingInDb != undefined) {
       uniqueLocations = uniqueLocations.filter(c => c !== item);
     }
@@ -228,24 +228,24 @@ async function SaveAllLocations(locations) {
   var listTrackingModel = [];
   locations.forEach((element) => {
 
-    imei = element.IMEI;
+    imei = element.imei;
 
     var model = new Tracking({
       InsertDate: Date.now(),
-      TrafficDate: element.TrafficDate,
-      IMEI: element.IMEI,
-      Latitude: element.Latitude,
-      Longitude: element.Longitude,
-      Speed: element.Speed,
-      Altitude: element.Altitude,
-      PositionStatus: element.PositionStatus,
-      Heading: element.Heading,
-      SatelliteCount: element.Satellites,
-      Angle: element.Angle,
-      HDOP: element.HDOP,
-      GsmSignal: element.GsmSignal,
-      Odometer: element.Odometer,
-      MetaData: element.MetaData
+      TrafficDate: element.trafficDate,
+      IMEI: element.imei,
+      Latitude: element.latitude,
+      Longitude: element.longitude,
+      Speed: element.speed,
+      Altitude: element.altitude,
+      PositionStatus: element.positionStatus,
+      Heading: element.heading,
+      SatelliteCount: element.satellites,
+      Angle: element.angle,
+      HDOP: element.hdop,
+      GsmSignal: element.gsmSignal,
+      Odometer: element.odometer,
+      MetaData: element.metaData
     });
 
     listTrackingModel.push(model);

@@ -1,5 +1,6 @@
 # Use Node.js version 16.14.2 as a base image
 FROM edge.pishgamanasia.ir/pasand/dev/node:1
+#FROM node:16
 
 # Set the working directory in the container
 WORKDIR /app
@@ -15,7 +16,12 @@ RUN npm install
 COPY . .
 
 # Expose the port your app runs on
-EXPOSE 8484
+EXPOSE 8383
 
 # Define the command to run your app
-CMD ["node", "app.js"]
+
+# For Run App By OTLP Signoz
+# CMD [ "npm","run", "serve" ] 
+
+# For Run App By PM2 
+CMD [ "npm","start"]  
